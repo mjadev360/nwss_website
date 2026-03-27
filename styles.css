@@ -436,6 +436,17 @@ header {
     font-family: inherit;
 }
 
+.hidden {
+    display: none;
+}
+
+.form-success {
+    color: var(--green);
+    font-weight: 600;
+    font-size: 0.97rem;
+    margin-top: 4px;
+}
+
 /* ===========================
    Footer
 =========================== */

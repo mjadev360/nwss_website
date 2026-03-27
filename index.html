@@ -205,7 +205,10 @@
                 Tell us about your .NET project — whether it's a legacy system in need of care, a database migration,
                 or something new you want to build. We're happy to have an initial conversation at no charge.
             </p>
-            <form class="contact-form" action="#" method="post">
+            <form class="contact-form" action="https://api.web3forms.com/submit" method="post">
+                <input type="hidden" name="access_key" value="855750e3-06e7-4c0e-848a-17fad4c2cba9">
+                <input type="hidden" name="subject" value="New Contact Form Submission - NorthWest Software Solutions">
+                <input type="checkbox" name="botcheck" class="hidden">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name">Your Name</label>
@@ -226,7 +229,29 @@
                         placeholder="Describe your application, what version of .NET it runs on, and what you need help with..." required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary btn-submit">Send Message</button>
+                <p class="form-success" hidden>Thanks! We'll be in touch shortly.</p>
             </form>
+            <script>
+                document.querySelector('.contact-form').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        body: JSON.stringify(Object.fromEntries(new FormData(form)))
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            form.reset();
+                            form.querySelector('.form-success').hidden = false;
+                        } else {
+                            alert('Something went wrong. Please try again.');
+                        }
+                    })
+                    .catch(() => alert('Something went wrong. Please try again.'));
+                });
+            </script>
         </div>
     </section>
 
